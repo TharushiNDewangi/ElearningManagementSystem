@@ -71,6 +71,22 @@ exports.getall = async (req, res) => {
 
 
 }
+exports.getclass=async(req,res)=>{
+    if(req.params && req.params.id){
+        console.log(req.params.id)
+        //console.log(req.params);
+        await Class.findById(req.params.id)
+        .populate('Class', 'ClassId')
+        .then(data => {
+            console.log(data.ClassId);
+           res.status(200).send({ data: data.ClassId });
+           //console.log(subjects);
+       }).catch(err=>{
+           res.status(400).send({error:err.massage})
+       });
+    }
+    
+  }
 
 exports.updateclassfees = (req, res) => {
 

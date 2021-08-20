@@ -12,6 +12,7 @@ const authuser_route = require('./routes/user-auth.js');
 const studentInstitute_route = require('./routes/Studentforinstitute');
 const classschedule_route = require('./routes/Class');
 const fees_route = require('./routes/classfees');
+const salary_route = require('./routes/salary');
 
 const PORT=process.env.PORT || 8065
 
@@ -48,7 +49,7 @@ app.use('/api',authuser_route)
 app.use('/api',studentInstitute_route)
 app.use('/api',classschedule_route)
 app.use('/api',fees_route )
-//app.use('/api',Address_route )
+app.use('/api',salary_route )
 
 
 app.listen(PORT,()=>{

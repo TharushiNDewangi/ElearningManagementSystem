@@ -1,16 +1,22 @@
 
 import React, { useState, useEffect } from 'react'
 import Layout from '../../components/Layout'
+import { DeleteOutline } from "@material-ui/icons";
 import { Container, Row, Col, Table } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import Input from '../../components/UI/Input';
 import Modal from '../../components/UI/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllfees, deleteproductbyid, updateproductbyid } from '../../actions';
+import { generatePublicUrl } from '../../urlConfig';
 import axios from "axios";
 import './style.css';
+import { formatMs } from '@material-ui/core';
+//create products function
+const Salary = (props) => {
 
-const Classfees = (props) => {
 
-
-    const [workshops, setWorkshops] = useState([]);
+    const [salary, setSalary] = useState([]);
     const [searchresult, setSearchresult] = useState(null);
     const [paperDetailModal, setProductDetails] = useState(null);
     const [updateDetailModal, setupdateDetails] = useState(null);
@@ -41,7 +47,7 @@ const Classfees = (props) => {
         }
 
         console.log(id);
-        axios.put(`http://localhost:8065/api/classfees/edit/${id}`, data)
+        axios.put(`http://localhost:8065/api/salary/edit/${id}`, data)
             .then(res => {
                 alert("approved");
                 console.log(data);
@@ -51,12 +57,12 @@ const Classfees = (props) => {
     };
     const Searchresult = (id) => {
         let data = {
-            feesId: id,
+            salaryId: id,
         }
 
         console.log("id :");
         console.log(data);
-        axios.post(`http://localhost:8065/api/classfees/sech`, data)
+        axios.post(`http://localhost:8065/api/salary/sech`, data)
             .then(res => {
                 console.log(res.data.data);
                 setSearchresult(res.data.data)
@@ -69,10 +75,10 @@ const Classfees = (props) => {
     console.log("ddddd");
     useEffect(() => {
         function getWorkshops() {
-            axios.get("http://localhost:8065/api/classfees/viewall").then((res) => {
+            axios.get("http://localhost:8065/api/salary/viewall").then((res) => {
                 console.log(res.data.data);
                 console.log("res.data");
-                setWorkshops(res.data.data);
+                setSalary(res.data.data);
                 console.log(res.data);
             }).catch((err) => {
                 alert(err.message);
@@ -202,13 +208,13 @@ const Classfees = (props) => {
                 <Row>
                     <Col md="6">
                         <button className="userListDel" onClick={e =>
-                            axios.delete(`http://localhost:8065/api/classfees/del/${deleteDetailModal._id}`)
+                            axios.delete(`http://localhost:8065/api/salary/del/${deleteDetailModal._id}`)
                                 .then(res => {
                                     alert("approved");
                                     console.log('added');
-                                })} >Delete</button>
+                                })}>Delete</button>
 
-                        <button className="userListEdit" >Cancel</button>
+                        <button className="userListEdit" >Edit</button>
 
 
                     </Col>
@@ -259,7 +265,7 @@ const Classfees = (props) => {
                     />
                     <Col md="6">
                         <button className="userListDel" handleClose={handleCloseUpdateDetailsModal}
-                        >Delete</button>
+                        >Cancel</button>
                         <button className="userListEdit" onClick={e => submitProductForm(updateDetailModal._id)
                         }
                         >Edit</button>
@@ -349,7 +355,7 @@ const Classfees = (props) => {
                 <Row>
                     <Col >
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <h3>Class Fees</h3>
+                            <h3>Salary Details</h3>
                             <dv>
                                 <input
                                     type="text"
@@ -371,7 +377,7 @@ const Classfees = (props) => {
                         <Table style={{ fontsize: 12 }} responsive="sm">
                             <thead>
                                 <tr >
-                                    <th>Feesid</th>
+                                    <th>Salary Id</th>
                                     {/* <th>Studentid</th>
                                     <th>classid</th> */}
                                     <th>email</th>
@@ -383,11 +389,11 @@ const Classfees = (props) => {
                                 </tr>
                                 {/*  */}
                             </thead>
-                            <tbody>{workshops.map((workshops, index) => (
+                            <tbody>{salary.map((salary, index) => (
                                 <tr >
 
-                                    <td onClick={() => showProductDetailModal(workshops)}
-                                        key={workshops._id}>{workshops.feesId}</td>
+                                    <td onClick={() => showProductDetailModal(salary)}
+                                        key={salary._id}>{salary.salaryId}</td>
                                     {/* {
                                         axios.get(`http://localhost:8065/api/classfees/getclass/${workshops.classid}`).then((res) => {
                                             console.log(res.data.data);
@@ -403,21 +409,21 @@ const Classfees = (props) => {
                                     {/* <td>{workshops.studentid}</td>
                                     <td>{workshops.classid}</td> */}
                                     {/* <td>{clsses}</td> */}
-                                    <td>{workshops.email}</td>
-                                    <td>{workshops.month}</td>
-                                    <td>{workshops.year}</td>
-                                    <td>{workshops.amount}</td>
+                                    <td>{salary.email}</td>
+                                    <td>{salary.month}</td>
+                                    <td>{salary.year}</td>
+                                    <td>{salary.amount}</td>
                                     <td>
                                         {/* <DeleteOutline
                                       className="productListDelete"
                                       // onClick={() => handleDelete(params.row.id)}
                                     /> */}
 
-                                        <button className="userListDel" onClick={() => DeleteDetailModal(workshops)}
+                                        <button className="userListDel" onClick={() => DeleteDetailModal(salary)}
                                         >Delete</button>
 
 
-                                        <button className="userListEdit" onClick={() => UpdateDetailModal(workshops)}>Edit</button>
+                                        <button className="userListEdit" onClick={() => UpdateDetailModal(salary)}>Edit</button>
                                     </td>
 
 
@@ -443,4 +449,4 @@ const Classfees = (props) => {
     )
 }
 
-export default Classfees
+export default Salary

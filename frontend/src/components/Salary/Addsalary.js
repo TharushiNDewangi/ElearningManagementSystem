@@ -19,18 +19,15 @@ const initialState = {
     month:'',
     subjects:[],
     options:[],
-    selectedsub:[],
-    classes:[],
-    optionscl:[],
-    selectedclass:[]
+    selectedsub:[]
+   
 }
-class Addcourse extends Component {
+class AddSalary extends Component {
     constructor(props){
         super(props);
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onSubjectSelected = this.onSubjectSelected.bind(this);
-        this.onClassSelected = this.onClassSelected.bind(this);
         this.state = initialState;
     }
     componentDidMount(){
@@ -48,30 +45,11 @@ class Addcourse extends Component {
                 this.setState({ options:data})
             })
         })
-        axios.get('http://localhost:8065/api/classschedule/viewall')
-        .then(res => {
-            this.setState({ classes: res.data.data}, () => {
-                let data=[];
-                
-                this.state.classes.map((item,index) => {
-                    let classes ={
-                        value: item._id,
-                        label: item.ClassId
-                    }
-                    console.log("classes")
-                    console.log(classes)
-                    data.push(classes)
-                });
-                this.setState({ optionscl:data})
-            })
-        })
-        }
-     
+       
+    }
    onChange(e) {
      this.setState({ [e.target.name]: e.target.value } )}
-     onClassSelected(e){
-        this.setState({ selectedclass: e ? e.map(item => item.value) : []});
-     }
+     
      onSubjectSelected(e){
         this.setState({ selectedsub: e ? e.map(item => item.value) : []});
      }
@@ -79,17 +57,17 @@ class Addcourse extends Component {
     {
         e.preventDefault();
         let course = {
-            feesId:this.state.feesId ,
+            salaryId:this.state.feesId ,
             email: this.state.email,
             amount: this.state.amount,
             year: this.state.year, 
             month: this.state.month,
             studentid: this.state.selectedsub,
-            classid: this.state.selectedclass,
+           
             
         } ;
         console.log(course);
-        axios.post('http://localhost:8065/api/classfees/create',course)
+        axios.post('http://localhost:8065/api/salary/create',course)
         .then(res=>{
             alert('added');
             console.log('added');
@@ -126,12 +104,7 @@ class Addcourse extends Component {
   className="basic-multi-select"
   isMulti/>
 
-<label htmlFor="name">classes ID</label>
-  <Select
-  options={this.state.optionscl}
-  onChange={this.onClassSelected}
-  className="basic-multi-select"
-  isMulti/>
+
 
   <div class="form-group">
     <label for="des">Email</label>
@@ -192,4 +165,4 @@ class Addcourse extends Component {
         )
     }
 }
-export default Addcourse;
+export default AddSalary;
