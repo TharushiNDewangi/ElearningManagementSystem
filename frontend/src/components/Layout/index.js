@@ -41,7 +41,10 @@ const Layout = (props) => {
                                     <NavLink to={'/addclassfees'}>AddClassfees Management</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to={'/addschedule'}>Schedule Management</NavLink>
+                                    <NavLink to={'/addschedule'}>Create New Schedule</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={'/allschedule'}>Schedule Management</NavLink>
                                 </li>
                             </ul>
                         </Col>
