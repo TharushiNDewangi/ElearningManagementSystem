@@ -1,5 +1,6 @@
 //const router = express.Router();
 const ClassSchedule = require('../models/Class');
+<<<<<<< HEAD
 const shortid = require('shortid')
 const slugify = require('slugify')
 const nodemailer = require("nodemailer");
@@ -83,8 +84,22 @@ exports.createClass = (req, res) => {
             }}
         if (ClassSchedule) {
             res.status(201).json({ ClassSchedule });
+=======
+const Teacher = require('../models/Teacher');
+const shortid = require('shortid');
+const slugify = require('slugify');
+
+exports.createClass = async (req, res) => {
+    if (req.body) {
+        try {
+            const newschedule = new ClassSchedule(req.body);
+            await newschedule.save();
+            res.status(201).json({ id: newschedule._id });
+        } catch (error) {
+            res.status(406).json({ error: error.message });
+>>>>>>> 3db4a0fa7ffce65c065cbec944a4aa2d07f39493
         }
-    }));
+    }
     //hhh
 };
 // exports.getclassfees=(req,res)=>
@@ -99,17 +114,16 @@ exports.createClass = (req, res) => {
 //     });
 // }
 
-exports.getall=async(req,res)=>{
+exports.getall = async (req, res) => {
     await ClassSchedule.find({})
-    .then(data=>{
-       res.status(200).send({data:data});
-   }).catch(err=>{
-       res.status(500).send({error:err.massage})
-       console.log(err);
-   });
-  
-           
-   }
+        .then((data) => {
+            res.status(200).send({ data: data });
+        })
+        .catch((err) => {
+            res.status(500).send({ error: err.massage });
+            console.log(err);
+        });
+};
 
 // exports.getproductsbyId = (req, res) => {
 
@@ -134,7 +148,6 @@ exports.getall=async(req,res)=>{
 //         return res.status(400).json({ error: 'params required' });
 //     }
 // };
-
 
 // exports.deleteProduct = (req, res) => {
 //     const { productid } = req.body.payload;
@@ -167,3 +180,11 @@ exports.getall=async(req,res)=>{
 //     }
 
 // }
+exports.getAllTeachers = async (req, res) => {
+    try {
+        const getAllTeachers = await Teacher.find({}).select('name');
+        res.status(200).json({ Teachers: getAllTeachers });
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+};
