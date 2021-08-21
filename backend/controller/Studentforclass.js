@@ -1,29 +1,28 @@
 //const router = express.Router();
-const Studentforinstitute = require('../models/Studentforinstitute');
+const Studentforclass = require('../models/Studentforclass');
 
 const nodemailer = require("nodemailer");
 
 
-exports.createStudentIninstitute = (req, res) => {
+exports.createStudentInclass = (req, res) => {
 
     // res.status(200).json({file: req.files , body:req.body});
     const {
-        name, email, studentId, Studentclass,subject,year,month
+        StudentGroupId,name, email,  Studentclass,studentid,classid
     } = req.body;
-    const studentforinstitute = new Studentforinstitute({
+    const studentforclass = new Studentforclass({
+        StudentGroupId,
         name, 
         email, 
-        studentId,
         Studentclass,  
-        subject,
-        year,
-        month
+        studentid,
+        classid
       
         // createBy: req.user._id
     });
 
-    studentforinstitute.save(((error, Studentforinstitute) => {
-        if (error) 
+    studentforclass.save(((error, Studentforclass) => {
+        if (error)
         {
             console.log(email);
         const receiverEmail = email; // get the reciver email address from body of the  request
@@ -51,15 +50,15 @@ exports.createStudentIninstitute = (req, res) => {
             let HelperOptions = {
                 from: senderMail, // sender address
                 to: receiverEmail, // list of receivers
-                subject: "Welcome to Sipni higher education.You have successfully registerd to the system", // Subject line
+                subject: "Welcome to Sipni higher education.You have successfully registerd to the class Group ", // Subject line
                 text: "", // plain text body
                 html: ` 
                       <h3>This is an automatically generated email, please do not reply </h3>
                       <li>Your salary pass your account check </li>
                       <li>status: Successuly  </li>
-                      <li>StudentId: ${studentId}</li>
+                      <li>StudentId: ${StudentGroupId}</li>
                       <li>class: ${Studentclass}</li>
-                      <li>year: ${year}</li>
+                     
                       
                       <h3>Best regards,</h3>
                       <p>Sipni Higher Education center</p>`,
@@ -82,9 +81,9 @@ exports.createStudentIninstitute = (req, res) => {
         } catch (e) {
             console.log(e);
         }
-        } 
-        if (Studentforinstitute) {
-            res.status(201).json({ Studentforinstitute });
+        }
+        if (Studentforclass) {
+            res.status(201).json({ Studentforclass });
         }
     }));
     //hhh
@@ -92,7 +91,7 @@ exports.createStudentIninstitute = (req, res) => {
 
 
 exports.getall=async(req,res)=>{
-    await Studentforinstitute.find({})
+    await Studentforclass.find({})
     .then(data=>{
        res.status(200).send({data:data});
    }).catch(err=>{
@@ -103,8 +102,8 @@ exports.getall=async(req,res)=>{
            
    }
 
-   exports.getstudentininstitute = (req, res) => {
-    Studentforinstitute.find({}).exec((error, students) => {
+   exports.getstudentinclass = (req, res) => {
+    Studentforclass.find({}).exec((error, students) => {
         if (error) return res.status(400).json({ error });
         if (students) {
             const studentlist = createstudent(students)
@@ -112,25 +111,25 @@ exports.getall=async(req,res)=>{
         }
     });
 }
-exports.updatestudentininstitute = (req, res) => {
+exports.updatestudentinclass = (req, res) => {
 
     const {
-        name, email,  Studentclass, subject ,year,month
+         name,email,Studentclass
     } = req.body;
   
     console.log(" id", req.params._id)
 
-    Studentforinstitute.findByIdAndUpdate(req.params._id, { $set: { name: name, email: email, Studentclass: Studentclass, subject:subject,year:year,month:month } },
+    Studentforclass.findByIdAndUpdate(req.params._id, { $set: {  name:name ,email: email, Studentclass: Studentclass} },
         { new: true })
         .catch((err) => {
             console.log(err);
         })
 }
 exports.deleteById = (req, res) => {
-    const { studentId } = req.params._id;
+    const { StudentGroupId } = req.params._id;
     console.log(req.params._id)
     if (req.params._id) {
-        Studentforinstitute.deleteOne({ _id: req.params._id }).exec((error, result) => {
+        Studentforclass.deleteOne({ _id: req.params._id }).exec((error, result) => {
         if (error) return res.status(400).json({ error });
         if (result) {
           res.status(202).json({ result });
@@ -142,10 +141,10 @@ exports.deleteById = (req, res) => {
   };
 
 exports.getstudentbyid=async(req,res)=>{
-    if(req.params && req.params.studentId){
-        console.log(req.params.studentId)
+    if(req.params && req.params.StudentGroupId){
+        console.log(req.params.StudentGroupId)
         //console.log(req.params);
-        await  Studentforinstitute.findById(req.params.studentId)
+        await  Studentforclass.findById(req.params.StudentGroupId)
         .then(data => {
             console.log(data);
            res.status(200).send({ data: data });
@@ -155,14 +154,14 @@ exports.getstudentbyid=async(req,res)=>{
        });
     }
     
-  }
-  exports.getstudentbystudentid=async(req,res)=>{
-    const studentId= req.body.studentId;
+  };
+  exports.getstudentbygroupid=async(req,res)=>{
+    const StudentGroupId= req.body.StudentGroupId;
     //const feesId=
     
-        console.log("xxx"+studentId)
+        console.log("xxx"+StudentGroupId)
         //console.log(req.params);
-        await  Studentforinstitute.findOne({studentId:studentId})
+        await  Studentforclass.findOne({StudentGroupId:StudentGroupId})
         .then(data => {
             console.log(data);
            res.status(200).send({ data: data });

@@ -10,6 +10,7 @@ const path = require('path');
 
 const authuser_route = require('./routes/user-auth.js');
 const studentInstitute_route = require('./routes/Studentforinstitute');
+const studentclass_route = require('./routes/Studentforclass');
 const classschedule_route = require('./routes/Class');
 const fees_route = require('./routes/classfees');
 
@@ -48,6 +49,7 @@ app.use('/api',authuser_route)
 app.use('/api',studentInstitute_route)
 app.use('/api',classschedule_route)
 app.use('/api',fees_route )
+app.use('/api',studentclass_route )
 //app.use('/api',Address_route )
 
 

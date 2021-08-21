@@ -18,6 +18,8 @@ const Layout = (props) => {
                   <li><NavLink exact to={'/'}>Home</NavLink></li>
                   <li><NavLink to={'/addstudenttoInstitute'}>AddStudent to Institute Mangement</NavLink></li>
                   <li><NavLink to={'/viewstudentininstitute'}>Student mangement in institute</NavLink></li>
+                  <li><NavLink to={'/addstudenttoClass'}>AddStudent to Class </NavLink></li>
+                  <li><NavLink to={'/viewstudentinClass'}>View Student  Class </NavLink></li>
                   <li><NavLink to={'/products'}>Classes Management</NavLink></li>
                   <li><NavLink to={'/orders'}>Admin Management</NavLink></li>
                   <li><NavLink to={'/classfees'}>Classfees Management</NavLink></li>

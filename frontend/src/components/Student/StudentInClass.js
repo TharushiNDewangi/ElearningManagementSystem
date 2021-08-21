@@ -9,9 +9,9 @@ import Modal from '../UI/Modal';
 import axios from "axios";
 //import './style.css';
 //create products function
-const StudentinInstitute = (props) => {
+const StudentinClass = (props) => {
     
-    const [studentsininstitute, setstudentininstitute] = useState([]);
+    const [studentsinclass, setstudentinclass] = useState([]);
     const [studentDetailModal, setStudentDetails] = useState(null);
     const [searchresult, setSearchresult] = useState(null);
     const [updateDetailModal, setupdateDetails] = useState(null);
@@ -21,23 +21,18 @@ const StudentinInstitute = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [Studentclass, setStudentclass] = useState("");
-    const [year, setYear] = useState("");
-    const [month, setMonth] = useState("");
-    const [subject, setSubject] = useState("");
     const [searchid, setSearchid] = useState("");
 
     const submitStudentForm = (id) => {
         let data = {
             name:name,
             email: email,
-            year:year,
-            month:month,
             Studentclass: Studentclass,
-            subject: subject
+            
         }
 
         console.log(id);
-        axios.put(`http://localhost:8065/api/studentInstitute/edit/${id}`, data)
+        axios.put(`http://localhost:8065/api/studentforclass/edit/${id}`, data)
             .then(res => {
                 alert("approved");
                 console.log(data);
@@ -47,12 +42,12 @@ const StudentinInstitute = (props) => {
     };
     const Searchresult = (id) => {
         let data = {
-            studentId: id,
+            StudentGroupId: id,
         }
         
         console.log("id :");
         console.log(data);
-        axios.post(`http://localhost:8065/api/studentInstitute/sech`,data)
+        axios.post(`http://localhost:8065/api/studentforclass/sech`,data)
             .then(res => {
                 console.log(res.data.data);
                 setSearchresult(res.data.data)
@@ -63,17 +58,17 @@ const StudentinInstitute = (props) => {
     };
   console.log("ddddd");
     useEffect(() => {
-        function getStudentinInstitute() {
-            axios.get(`http://localhost:8065/api/studentInstitute/viewall`).then((res) => {
+        function getStudentinclass() {
+            axios.get("http://localhost:8065/api/studentforclass/viewall").then((res) => {
                 console.log(res.data.data);
                 console.log("res.data");
-                setstudentininstitute(res.data.data);
+                setstudentinclass(res.data.data);
                 console.log(res.data);
             }).catch((err) => {
                 alert(err.message);
             })
         }
-        getStudentinInstitute();
+        getStudentinclass();
     }, [])
    
    
@@ -149,27 +144,13 @@ const StudentinInstitute = (props) => {
                 <Row>
                    
                     <Col md="6">
-                        <label className="key">Email</label>
+                        <label className="key">Student class</label>
                         <p className="key">{studentDetailModal.Studentclass}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Subject</label>
-                        <p className="key">{studentDetailModal.subject}</p>
-                    </Col>
-                    
-                </Row>
-                <Row>
-                    <Col md="6">
-                        <label className="key">Year</label>
-                        <p className="key">{studentDetailModal.year}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Month</label>
-                        <p className="key">{studentDetailModal.month}</p>
                     </Col>
                    
                     
                 </Row>
+               
                
                 
 
@@ -203,35 +184,21 @@ const StudentinInstitute = (props) => {
                 <Row>
                    
                     <Col md="6">
-                        <label className="key">Email</label>
+                        <label className="key">Student class</label>
                         <p className="key">{deleteDetailModal.Studentclass}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{deleteDetailModal.subject}</p>
-                    </Col>
-
-                </Row>
-                <Row>
-                   
-                    <Col md="6">
-                        <label className="key">MOnth</label>
-                        <p className="key">{deleteDetailModal.month}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Year</label>
-                        <p className="key">{deleteDetailModal.year}</p>
                     </Col>
                     <Col md="6">
                         <label className="key">id</label>
                         <p className="key">{deleteDetailModal._id}</p>
                     </Col>
+                   
 
                 </Row>
+                
                 <Row>
                     <Col md="6">
                         <button className="userListDel" onClick={e =>
-                            axios.delete(`http://localhost:8065/api/studentInstitute/del/${deleteDetailModal._id}`)
+                            axios.delete(`http://localhost:8065/api/studentforclass/del/${deleteDetailModal._id}`)
                                 .then(res => {
                                     alert("approved");
                                     console.log('added');
@@ -280,24 +247,7 @@ const StudentinInstitute = (props) => {
                         placeholder={updateDetailModal.Studentclass}
                         onChange={(e) => setStudentclass(e.target.value)}
                     />
-                    <Input
-                        label="Subject"
-                        value={subject}
-                        placeholder={updateDetailModal.subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                    />
-                     <Input
-                        label="Year"
-                        value={year}
-                        placeholder={updateDetailModal.year}
-                        onChange={(e) => setYear(e.target.value)}
-                    />
-                     <Input
-                        label="Month"
-                        value={month}
-                        placeholder={updateDetailModal.month}
-                        onChange={(e) => setMonth(e.target.value)}
-                    />
+                  
                     <Col md="6">
                         <button className="userListDel"
                         >Delete</button>
@@ -353,24 +303,7 @@ const StudentinInstitute = (props) => {
                         placeholder={searchresult.Studentclass}
                         onChange={(e) => setStudentclass(e.target.value)}
                     />
-                    <Input
-                        label="Name"
-                        value={subject}
-                        placeholder={searchresult.subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                    />
-                     <Input
-                        label="Year"
-                        value={year}
-                        placeholder={searchresult.year}
-                        onChange={(e) => setYear(e.target.value)}
-                    />
-                     <Input
-                        label="Month"
-                        value={month}
-                        placeholder={searchresult.month}
-                        onChange={(e) => setMonth(e.target.value)}
-                    />
+                   
                     <Col md="6">
                         <button className="userListDel"
                         >Delete</button>
@@ -405,7 +338,7 @@ const StudentinInstitute = (props) => {
             <Row>
                     <Col >
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h3>Students In Institute</h3>
+                        <h3>Students In Class</h3>
                             <dv>
                             <input
                                     type="text"
@@ -425,45 +358,40 @@ const StudentinInstitute = (props) => {
                 <Row>
                     <Col >
                      
-                         
+                           
                             <Table style={{ fontsize: 12 }} responsive="sm">
                 <thead>
                     <tr >
-                    <th>Student ID</th>
+                        <th>StudentGroupId</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Student class</th>
-                        <th>Subject</th>
-                        <th>Month</th>
-                        <th>Year</th>
                         <th>Action</th>
                         
 
                     </tr>
                     {/*  */}
                 </thead>
-                <tbody>{studentsininstitute.map((studentsininstitute, index) => (
+                <tbody>{studentsinclass.map((studentsinclass, index) => (
                             <tr >
                                 
-                                <td onClick={() => showStudentDetailModal(studentsininstitute)}
-                            key={studentsininstitute._id}>{studentsininstitute.studentId}</td>
-                                <td>{studentsininstitute.name}</td>
-                                <td>{studentsininstitute.email}</td>
-                                <td>{studentsininstitute.Studentclass}</td>
-                                <td>{studentsininstitute.subject}</td>
-                                <td>{studentsininstitute.month}</td>
-                                <td>{studentsininstitute.year}</td>
+                                <td onClick={() => showStudentDetailModal(studentsinclass)}
+                            key={studentsinclass._id}>{studentsinclass.StudentGroupId}</td>
+                                <td>{studentsinclass.name}</td>
+                                <td>{studentsinclass.email}</td>
+                                <td>{studentsinclass.Studentclass}</td>
+                              
                                 <td>
                                         {/* <DeleteOutline
                                       className="productListDelete"
                                       // onClick={() => handleDelete(params.row.id)}
                                     /> */}
 
-                                        <button className="userListDel" onClick={() => DeleteDetailModal(studentsininstitute)}
+                                        <button className="userListDel" onClick={() => DeleteDetailModal(studentsinclass)}
                                         >Delete</button>
 
 
-                                        <button className="userListEdit" onClick={() => UpdateDetailModal(studentsininstitute)}>Edit</button>
+                                        <button className="userListEdit" onClick={() => UpdateDetailModal(studentsinclass)}>Edit</button>
                                     </td>
                               
 
@@ -493,4 +421,4 @@ const StudentinInstitute = (props) => {
     )
 }
 
-export default StudentinInstitute
+export default StudentinClass

@@ -31,36 +31,20 @@ const Studentinstituteschema=new schema(
             required:true,
             trim:true
         },
-        // offer:{ type:Number},
-        
-        // productPictures:[
-        //     { img: {type: String}}
-        // ],
-        // name:[
-        //     {
-        //         userId:{type :mongoose.Schema.Types.ObjectId, ref: 'User'},
-        //         review: String
-        //     }
-        // ],
-       // classid:{type:mongoose.Schema.Types.ObjectId,ref :'Catogory' },
-       // name:{type:mongoose.Schema.Types.ObjectId,ref :'User' },
-        // createBy:{type:mongoose.Schema.Types.ObjectId, ref:'User',required:true },
-        // updatedAt:Date,
+        year:{
+            type:String,
+            required:true,
+            trim:true
+        },
+        month: {
+            type: String,
+            required:true,
+            trim:true 
+        },
+     
         
         },{ timestamps: true})
 
 
 const studentforinstitute =mongoose.model("Studentforinstitute",Studentinstituteschema);
 module.exports=studentforinstitute;
-//module.exports=
-// exports.getclassfees=(req,res)=>
-// {
-//     classfees.find({}).exec((error,classfees)=>
-//     {
-//         if(error) return res.status(400).json({error});
-//         if(classfees){
-//             const fees=createCatogories(classfees)
-//             return res.status(201).json({fees});
-//         }
-//     });
-// }

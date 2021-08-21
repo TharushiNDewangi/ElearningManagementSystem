@@ -13,6 +13,9 @@ import AddClassFees from './components/ClassFess/addfees';
 import { getInitialData } from './actions/initialData.action';
 import AddStudentToInstitute from './components/Student/AddStudentToInstitute';
 import StudentinInstitute from './components/Student/StudentsInInstitute';
+import AddStudenttoclass from './components/Student/AddStudentToClass';
+import StudentinClass from './components/Student/StudentInClass';
+
 
 function App() {
 //part12
@@ -37,6 +40,8 @@ function App() {
          <PrivateRoute path = "/addclassfees" exact component = {AddClassFees}/>
          <PrivateRoute path = "/addstudenttoInstitute" exact component = {AddStudentToInstitute}/>
          <PrivateRoute path = "/viewstudentininstitute" exact component ={StudentinInstitute}/>
+         <PrivateRoute path = "/addstudenttoClass" exact component = {AddStudenttoclass}/>
+         <PrivateRoute path = "/viewstudentinClass" exact component = {StudentinClass}/>
          <Route path = "/signin" component ={ Signin }/>
          <Route path = "/signup" component ={ Signup }/>
        </Switch>

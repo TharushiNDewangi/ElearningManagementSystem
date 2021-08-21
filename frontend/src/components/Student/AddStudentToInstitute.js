@@ -1,15 +1,11 @@
 
-import React, { useState ,useEffect} from 'react'
+import React, { useState } from 'react'
 import Layout from '../../components/Layout'
-import { DeleteOutline } from "@material-ui/icons";
-import { Container, Row, Col, Table } from 'react-bootstrap';
-import Input from '../../components/UI/Input';
-import Modal from '../../components/UI/Modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProduct,deleteproductbyid,updateproductbyid } from '../../actions';
-import { generatePublicUrl } from '../../urlConfig';
+
+import { Container,  } from 'react-bootstrap';
+
 import axios from "axios";
-//import './style.css';
+import './style.css';
 //create products function
 const AddStudentToInstitute = (props) => {
     const [name, setName] = useState('');
@@ -17,16 +13,12 @@ const AddStudentToInstitute = (props) => {
     const [studentId, setstudentId] = useState('');
     const [Studentclass, setStudentclass] = useState('');
     const [subject, setsubject] = useState('');
+    const[year,setYear] = useState('');
+    const[month,setMonth] = useState('');
+
     
    
-    //const [paperDetailModal, setProductDetails] = useState(null);
 
-    // const token = localStorage.getItem('token');
-    // const config = {
-    //     headers: { Authorization: `Bearer ${token}` }
-    // };
-
-    //console.log('user token'+config);
     function sendData(e){
         e.preventDefault();
        
@@ -38,6 +30,8 @@ const AddStudentToInstitute = (props) => {
             studentId:studentId,
             Studentclass:Studentclass,
             subject:subject,
+            year:year,
+            month:month
 
         }
         axios.post( 
@@ -53,41 +47,7 @@ const AddStudentToInstitute = (props) => {
             });
           }
        
-    //    return (
-    //         <Modal
-    //             show={paperDetailModal}
-    //             handleClose={handleCloseProductDetailsModal}
-    //             modalTitle={'Workshop Details'}
-    //             size="lg"
-
-    //         >
-    //             {/* <Row>
-    //                 <Col md="6">
-    //                     <label className="key">Topic</label>
-    //                     <p className="key">{paperDetailModal.topic}</p>
-    //                 </Col>
-    //                 <Col md="6">
-    //                     <label className="key">Description</label>
-    //                     <p className="key">{paperDetailModal.description}</p>
-    //                 </Col>
-    //             </Row>
-    //             <Row>
-    //                 <Col md="6">
-    //                     <label className="key">Date</label>
-    //                     <p className="key">{paperDetailModal.date}</p>
-    //                 </Col>
-    //                 <Col md="6">
-    //                     <label className="key">Email</label>
-    //                     <p className="key">{paperDetailModal.email}</p>
-    //                 </Col>
-                    
-    //             </Row> */}
-               
-                
-
-    //         </Modal>
-    //     );
-    // }
+   
 
     return (
         <Layout sidebar>
@@ -100,7 +60,7 @@ const AddStudentToInstitute = (props) => {
     </div>
 
 
-        <div className ="container">
+        <div className ="container-form">
             <form onSubmit ={sendData}>
                 <div className="form-group">
                     <label for="name">Name</label>
@@ -133,8 +93,22 @@ const AddStudentToInstitute = (props) => {
                 </div>
                 <div className="form-group">
                     <label for="subject">Subject</label>
-                    <input type="subject" className="form-control" id="subject"  placeholder="Enter Subject" onChange={(e)=>{
+                    <input type="text" className="form-control" id="subject"  placeholder="Enter Subject" onChange={(e)=>{
                         setsubject(e.target.value);
+                     }} />
+                    
+                </div>
+                <div className="form-group">
+                    <label for="year">Year</label>
+                    <input type="text" className="form-control" id="year"  placeholder="Enter Year" onChange={(e)=>{
+                        setYear(e.target.value);
+                     }} />
+                    
+                </div>
+                <div className="form-group">
+                    <label for="month">Month</label>
+                    <input type="text" className="form-control" id="month"  placeholder="Enter Month" onChange={(e)=>{
+                        setMonth(e.target.value);
                      }} />
                     
                 </div>
