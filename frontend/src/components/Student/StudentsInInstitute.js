@@ -149,7 +149,7 @@ const StudentinInstitute = (props) => {
                 <Row>
                    
                     <Col md="6">
-                        <label className="key">Email</label>
+                        <label className="key">Student class</label>
                         <p className="key">{studentDetailModal.Studentclass}</p>
                     </Col>
                     <Col md="6">
@@ -203,11 +203,11 @@ const StudentinInstitute = (props) => {
                 <Row>
                    
                     <Col md="6">
-                        <label className="key">Email</label>
+                        <label className="key">Student class</label>
                         <p className="key">{deleteDetailModal.Studentclass}</p>
                     </Col>
                     <Col md="6">
-                        <label className="key">Email</label>
+                        <label className="key">Subject</label>
                         <p className="key">{deleteDetailModal.subject}</p>
                     </Col>
 
@@ -215,7 +215,7 @@ const StudentinInstitute = (props) => {
                 <Row>
                    
                     <Col md="6">
-                        <label className="key">MOnth</label>
+                        <label className="key">Month</label>
                         <p className="key">{deleteDetailModal.month}</p>
                     </Col>
                     <Col md="6">
@@ -230,14 +230,14 @@ const StudentinInstitute = (props) => {
                 </Row>
                 <Row>
                     <Col md="6">
-                        <button className="userListDel" onClick={e =>
+                        <button className="userListDel1" onClick={e =>
                             axios.delete(`http://localhost:8065/api/studentInstitute/del/${deleteDetailModal._id}`)
                                 .then(res => {
                                     alert("approved");
                                     console.log('added');
                                 })}>Delete</button>
 
-                        <button className="userListEdit" >Edit</button>
+                        {/* <button className="userListEdit" >Edit</button> */}
 
 
                     </Col>
@@ -342,19 +342,19 @@ const StudentinInstitute = (props) => {
                         onChange={(e) => setName(e.target.value)}
                     />
                     <Input
-                        label="Name"
+                        label="Email"
                         value={email}
                         placeholder={searchresult.email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <Input
-                        label="Name"
+                        label="Studentclass"
                         value={Studentclass}
                         placeholder={searchresult.Studentclass}
                         onChange={(e) => setStudentclass(e.target.value)}
                     />
                     <Input
-                        label="Name"
+                        label="Subject"
                         value={subject}
                         placeholder={searchresult.subject}
                         onChange={(e) => setSubject(e.target.value)}

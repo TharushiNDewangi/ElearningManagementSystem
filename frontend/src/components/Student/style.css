@@ -24,3 +24,12 @@
     margin-left: 20px;
 
 }
+.userListDel1{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #b03b41;
+    color: white;
+    cursor: pointer;
+    margin-left: 100px;
+}
