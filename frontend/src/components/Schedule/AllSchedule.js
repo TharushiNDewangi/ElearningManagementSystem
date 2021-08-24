@@ -4,6 +4,8 @@ import { Container, Row, Col, Table } from 'react-bootstrap';
 import Input from '../UI/Input';
 import Modal from '../UI/Modal';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import { Link } from 'react-router-dom';
 import './style.css';
 const AllSchedule = (props) => {
@@ -286,6 +288,39 @@ const AllSchedule = (props) => {
         );
     };
 
+    const exportPDF = () => {
+        const unit = 'pt';
+        const size = 'A4'; // Use A1, A2, A3 or A4
+        const orientation = 'portrait'; // portrait or landscape
+
+        const marginLeft = 40;
+        const doc = new jsPDF(orientation, unit, size);
+
+        doc.setFontSize(15);
+
+        const title = 'All Scheduls';
+        const headers = ['Class ID', 'Batch ID', 'Teacher', 'Hall', 'Day', 'From', 'To'];
+
+        const data = allSchedules.map((schedule) => [
+            schedule.ClassId,
+            schedule.hall,
+            schedule.teachername,
+            schedule.Studentbatch,
+            schedule.day,
+            schedule.starttime,
+            schedule.endtime,
+        ]);
+
+        let content = {
+            startY: 50,
+            head: headers,
+            body: data,
+        };
+
+        doc.text(title, marginLeft, 40);
+        doc.autoTable(content);
+        doc.save('report.pdf');
+    };
     return (
         <Layout sidebar>
             <Container>
@@ -370,7 +405,7 @@ const AllSchedule = (props) => {
                         </Link>
                     </Col>
                     <Col xs="6" className="text-right">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" onClick={() => exportPDF()}>
                             Download
                         </button>
                     </Col>
