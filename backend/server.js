@@ -47,19 +47,11 @@ connection
 
 //routes
 
-<<<<<<< HEAD
-app.use('/api',authuser_route)
-app.use('/api',studentInstitute_route)
-app.use('/api',classschedule_route)
-app.use('/api',fees_route )
-app.use('/api',salary_route )
-=======
 app.use('/api', authuser_route);
 app.use('/api', studentInstitute_route);
 app.use('/api', classschedule_route);
 app.use('/api', fees_route);
-//app.use('/api',Address_route )
->>>>>>> 3db4a0fa7ffce65c065cbec944a4aa2d07f39493
+app.use('/api', salary_route);
 
 app.listen(PORT, () => {
     console.log('server running');

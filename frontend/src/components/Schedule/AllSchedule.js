@@ -5,7 +5,7 @@ import Input from '../UI/Input';
 import Modal from '../UI/Modal';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-//import './style.css';
+import './style.css';
 const AllSchedule = (props) => {
     const [allSchedules, setAllSchedules] = useState([]);
     ///////////////////
@@ -29,11 +29,12 @@ const AllSchedule = (props) => {
             .get('http://localhost:8065/api/classschedule/viewall')
             .then((res) => {
                 setAllSchedules(res.data.data);
+                console.log(allSchedules);
             })
             .catch((err) => {
                 alert(err.message);
             });
-    }, []);
+    }, [deleteDetailModal]);
 
     const submitStudentForm = (id) => {
         let data = {
@@ -61,17 +62,17 @@ const AllSchedule = (props) => {
     };
 
     const handleCloseStudentDetailsModal = () => {
-        setStudentDetails(false);
+        setStudentDetails(null);
     };
 
     const handleCloseUpdateDetailsModal = () => {
-        setupdateDetails(false);
+        setupdateDetails(null);
     };
     const handleCloseDeleteDetailsModal = () => {
-        setDeleteDetails(false);
+        setDeleteDetails(null);
     };
     const handleCloseSearchDetailsModal = () => {
-        setSearchresult(false);
+        setSearchresult(null);
     };
 
     const showStudentDetailModal = (student) => {
@@ -80,8 +81,8 @@ const AllSchedule = (props) => {
     const UpdateDetailModal = (student) => {
         setupdateDetails(student);
     };
-    const DeleteDetailModal = (student) => {
-        setDeleteDetails(student);
+    const DeleteDetailModal = (schedule) => {
+        setDeleteDetails(schedule);
     };
     const SearchDetailModal = (student) => {
         setSearchDetails(student);
@@ -129,36 +130,35 @@ const AllSchedule = (props) => {
         if (!deleteDetailModal) {
             return null;
         }
-
         return (
             <Modal
                 show={deleteDetailModal}
                 handleClose={handleCloseDeleteDetailsModal}
-                modalTitle={'Delete Classfees'}
-                size="lg"
+                modalTitle={'Delete Schedule'}
+                size="sm"
             >
                 <Row>
                     <Col md="6">
-                        <label className="key">Name</label>
-                        <p className="key">{deleteDetailModal.name}</p>
+                        <label className="key">Class ID:</label>
+                        <p className="key">{deleteDetailModal.ClassId}</p>
                     </Col>
                     <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{deleteDetailModal.email}</p>
+                        <label className="key">Batch ID:</label>
+                        <p className="key">{deleteDetailModal.Studentbatch}</p>
                     </Col>
                 </Row>
                 <Row>
                     <Col md="6">
-                        <label className="key">studentId</label>
-                        <p className="key">{deleteDetailModal.studentId}</p>
+                        <label className="key">Teacher:</label>
+                        <p className="key">{deleteDetailModal.teachername}</p>
                     </Col>
                     <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{deleteDetailModal.Studentclass}</p>
+                        <label className="key">Hall:</label>
+                        <p className="key">{deleteDetailModal.hall}</p>
                     </Col>
                     <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{deleteDetailModal.subject}</p>
+                        <label className="key">Day:</label>
+                        <p className="key">{deleteDetailModal.day}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -168,18 +168,15 @@ const AllSchedule = (props) => {
                             onClick={(e) =>
                                 axios
                                     .delete(
-                                        `http://localhost:8065/api/studentInstitute/del/${deleteDetailModal._id}`
+                                        `http://localhost:8065/api/classschedule/del/${deleteDetailModal._id}`
                                     )
                                     .then((res) => {
-                                        alert('approved');
-                                        console.log('added');
+                                        setDeleteDetails(null);
                                     })
                             }
                         >
                             Delete
                         </button>
-
-                        <button className="userListEdit">Edit</button>
                     </Col>
                 </Row>
             </Modal>
@@ -347,7 +344,7 @@ const AllSchedule = (props) => {
                                         <td>
                                             <button
                                                 className="userListDel"
-                                                onClick={() => DeleteDetailModal(studentsininstitute)}
+                                                onClick={() => DeleteDetailModal(schedule)}
                                             >
                                                 Delete
                                             </button>

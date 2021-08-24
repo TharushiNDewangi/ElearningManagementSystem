@@ -16,3 +16,7 @@ h2 {
 .btn-primary {
     background: rgb(32, 31, 31);
 }
+.modal-90w {
+    max-width: 60% !important;
+    font-size: 20px;
+}

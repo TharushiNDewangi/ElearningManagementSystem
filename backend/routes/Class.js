@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { requireSignin, sellermiddleware } = require('../middleware/index');
 // const {addcategory,getcategory}=require('../controller/Studentforinstitute')
-const { getall, createClass, getAllTeachers } = require('../controller/Class');
+const { getall, createClass, getAllTeachers, deleteById } = require('../controller/Class');
 //const Product = require('../models/product');
 const multer = require('multer');
 //const upload=multer({dest:'uploads/'})
@@ -13,6 +13,7 @@ const path = require('path');
 router.post('/classschedule/create', createClass);
 router.get('/classschedule/viewall', getall);
 router.get('/classschedule/teachers', getAllTeachers);
+router.delete('/classschedule/del/:_id', deleteById);
 // router.get('/products/:productid',getproductsbyId);
 // router.delete('/product/delete/:productid',deleteProduct);
 // router.delete('/products/update/:productid',editproduct);

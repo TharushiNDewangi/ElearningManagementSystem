@@ -35,3 +35,15 @@ exports.getAllTeachers = async (req, res) => {
         res.status(404).json({ error: error.message });
     }
 };
+exports.deleteById = (req, res) => {
+    if (req.params._id) {
+        ClassSchedule.deleteOne({ _id: req.params._id }).exec((error, result) => {
+            if (error) return res.status(400).json({ error });
+            if (result) {
+                res.status(202).json({ result });
+            }
+        });
+    } else {
+        res.status(400).json({ error: 'Params required' });
+    }
+};
