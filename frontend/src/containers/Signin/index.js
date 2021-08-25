@@ -61,6 +61,10 @@ const Signin = (props) => {
     const userLogin = (e) => {
         e.preventDefault();
 
+        if (email.length === 0 || password.length === 0) {
+            return alert('Fill all the required details');
+        }
+
         const user = {
             email,
             password,
@@ -89,7 +93,6 @@ const Signin = (props) => {
                         <TextField
                             variant="outlined"
                             margin="normal"
-                            required
                             fullWidth
                             id="email"
                             label="Email Address"
@@ -98,11 +101,11 @@ const Signin = (props) => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             autoFocus
+                            required
                         />
                         <TextField
                             variant="outlined"
                             margin="normal"
-                            required
                             fullWidth
                             name="password"
                             label="Password"
@@ -111,6 +114,7 @@ const Signin = (props) => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             autoComplete="current-password"
+                            required
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}

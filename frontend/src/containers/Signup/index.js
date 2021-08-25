@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../actions';
-import { useHistory } from 'react-router-dom';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = (props) => {
     const classes = useStyles();
-    const history = useHistory();
+
     const [name, setName] = useState('');
     //const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -56,8 +56,6 @@ const Signup = (props) => {
             password,
         };
         dispatch(signup(user));
-
-        history.push('/');
     };
 
     if (auth.authenticate) {
