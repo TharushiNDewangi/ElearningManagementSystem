@@ -28,8 +28,15 @@ const AddSchedule = (props) => {
     function sendData(e) {
         e.preventDefault();
 
+        let randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let result = '';
+
+        result +=
+            randomChars.charAt(Math.floor(Math.random() * randomChars.length)) +
+            Math.floor(Math.random() * 100);
+
         let data = {
-            ClassId: Math.floor(Math.random() * 100) + '-' + Math.floor(Math.random() * 100),
+            ClassId: result,
             hall: hall,
             teachername: teacher,
             Studentbatch: batch,
@@ -102,9 +109,11 @@ const AddSchedule = (props) => {
                             }}
                         >
                             <option value="none">None</option>
-                            <option value="12A">12A</option>
-                            <option value="12B">12B</option>
-                            <option value="13A">13A</option>
+                            <option value="2021-SE">2021-SE</option>
+                            <option value="2021-CS">2021-CS</option>
+                            <option value="2020-SE">2020-SE</option>
+                            <option value="2020-CS">2020-CS</option>
+                            <option value="2021-EN">2021-EN</option>
                         </Form.Control>
                     </div>
                     <div className="form-group">

@@ -299,7 +299,7 @@ const AllSchedule = (props) => {
         doc.setFontSize(15);
 
         const title = 'All Scheduls';
-        const headers = ['Class ID', 'Batch ID', 'Teacher', 'Hall', 'Day', 'From', 'To'];
+        const headers = [['Class ID', 'Batch ID', 'Teacher', 'Hall', 'Day', 'From', 'To']];
 
         const data = allSchedules.map((schedule) => [
             schedule.ClassId,
@@ -319,7 +319,7 @@ const AllSchedule = (props) => {
 
         doc.text(title, marginLeft, 40);
         doc.autoTable(content);
-        doc.save('report.pdf');
+        doc.save('Schedule report.pdf');
     };
     return (
         <Layout sidebar>
