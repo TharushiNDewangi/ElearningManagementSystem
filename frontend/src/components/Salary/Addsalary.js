@@ -1,12 +1,6 @@
 import React, { useState ,useEffect,Component} from 'react'
 import Layout from '../../components/Layout'
-import { DeleteOutline } from "@material-ui/icons";
 import { Container, Row, Col, Table } from 'react-bootstrap';
-import Input from '../../components/UI/Input';
-import Modal from '../../components/UI/Modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProduct,deleteproductbyid,updateproductbyid } from '../../actions';
-import { generatePublicUrl } from '../../urlConfig';
 import axios from "axios";
 import Select from 'react-select';
 
@@ -31,7 +25,7 @@ class AddSalary extends Component {
         this.state = initialState;
     }
     componentDidMount(){
-        axios.get('http://localhost:8065/api/studentInstitute/viewall')
+        axios.get('http://localhost:8065/api/teachers/view')
         .then(res => {
             this.setState({ subjects: res.data.data}, () => {
                 let data=[];
@@ -69,7 +63,7 @@ class AddSalary extends Component {
         console.log(course);
         axios.post('http://localhost:8065/api/salary/create',course)
         .then(res=>{
-            alert('added');
+            alert('Successfuly added');
             console.log('added');
         })
         .catch(err =>{
@@ -79,17 +73,16 @@ class AddSalary extends Component {
     render(){
         return(
             <Layout sidebar>
-            <Container>
-            <div >
-                <h1>
-                    Add new Subject
-                </h1>
-              
+            
+                <h2>
+                    Add New Salary
+                </h2>
+                <div className="container-form">  
                 <form onSubmit={this.onSubmit}>
   <div class="form-group">
-    <label htmlFor="name">Fees ID</label>
+    <label htmlFor="name">Salary ID</label>
     <input 
-     type="Number"
+     type="text"
      className="form-control" 
      id="feesId"
      name="feesId" 
@@ -97,7 +90,7 @@ class AddSalary extends Component {
      onChange={this.onChange}/>
    
   </div>
-  <label htmlFor="name">Student ID</label>
+  <label htmlFor="name">Teacher ID</label>
   <Select
   options={this.state.options}
   onChange={this.onSubjectSelected}
@@ -113,6 +106,7 @@ class AddSalary extends Component {
      className="form-control" 
      id="email" 
      name="email" 
+     placeholder="Enter Email"
      value={this.state.email}
      onChange={this.onChange}
      />
@@ -133,6 +127,7 @@ class AddSalary extends Component {
      type="text" 
      className="form-control" 
      id="des" 
+     placeholder="Enter Month"
      name="month" 
      value={this.state.month}
      onChange={this.onChange}
@@ -144,6 +139,7 @@ class AddSalary extends Component {
      className="form-control" 
      id="des" 
      name="year" 
+     placeholder="Enter Year"
      value={this.state.year}
      onChange={this.onChange}
      /></div>
@@ -157,7 +153,7 @@ class AddSalary extends Component {
              
                
             </div>
-            </Container>
+          
            
             
 
