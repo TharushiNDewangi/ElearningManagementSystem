@@ -2,8 +2,8 @@
 const Classfees = require('../models/classfees');
 const Student = require('../models/Studentforinstitute');
 const Class = require('../models/Class');
-const shortid = require('shortid')
-const slugify = require('slugify')
+const nodemailer = require("nodemailer");
+
 
 
 
@@ -15,7 +15,7 @@ exports.createclassfees = (req, res) => {
     } = req.body;
     //const feesId=
     //const ClassId= {Class.findOne({ClassId:classid}).select(ClassId)}
-   // console.log(ClassId);
+   console.log(feesId);
     const classfees = new Classfees({
         feesId,
         email,
@@ -28,9 +28,124 @@ exports.createclassfees = (req, res) => {
     });
 
     classfees.save(((error, Classfees) => {
-        if (error) return res.status(400).json({ error });
+        if (error) {
+            console.log(email);
+            const receiverEmail = email; // get the reciver email address from body of the  request
+            const senderMail = "edexonlineconferencemanagement@gmail.com"; // set emailmaddress of sender
+            const password = "asdqwe@123"; // set password of sender
+    
+            try {
+                /*
+               create reusable transporter object using the default SMTP transport
+              */
+                let transporter = nodemailer.createTransport({
+                    service: "gmail", // use gmail as the email service
+                    port: 25, // port number
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        // autnetication details
+                        user: senderMail,
+                        pass: password,
+                    },
+                    tls: {
+                        rejectUnauthorized: false,
+                    },
+                });
+        
+                let HelperOptions = {
+                    from: senderMail, // sender address
+                    to: receiverEmail, // list of receivers
+                    subject: "Your salary pass your account", // Subject line
+                    text: "", // plain text body
+                    html: ` 
+                          <h3>This is an automatically generated email, please do not reply </h3>
+                          <li>Your salary pass your account check </li>
+                          <li>status: Successuly  </li>
+                          <li>amount: ${amount}</li>
+                          <li>amount: ${month}</li>
+                          <li>amount: ${year}</li>
+                          
+                          <h3>Best regards,</h3>
+                          <p>Sipni Higher Education center</p>`,
+                };
+        
+                // HTML version of the message
+        
+                transporter.sendMail(HelperOptions, (error, info) => {
+                    // send mail with defined transport object
+                    if (error) {
+                        return console.log(error);
+                    }
+        
+                    console.log("The message was sent!");
+        
+                    console.log(info);
+        
+                    res.json(info); // send the json response
+                });
+            } catch (e) {
+                console.log(e);
+            }
+            } 
         if (Classfees) {
             res.status(201).json({ Classfees });
+            console.log(email);
+            const receiverEmail = email; // get the reciver email address from body of the  request
+            const senderMail = "edexonlineconferencemanagement@gmail.com"; // set emailmaddress of sender
+            const password = "asdqwe@123"; // set password of sender
+    
+            try {
+                /*
+               create reusable transporter object using the default SMTP transport
+              */
+                let transporter = nodemailer.createTransport({
+                    service: "gmail", // use gmail as the email service
+                    port: 25, // port number
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        // autnetication details
+                        user: senderMail,
+                        pass: password,
+                    },
+                    tls: {
+                        rejectUnauthorized: false,
+                    },
+                });
+        
+                let HelperOptions = {
+                    from: senderMail, // sender address
+                    to: receiverEmail, // list of receivers
+                    subject: "Your salary pass your account", // Subject line
+                    text: "", // plain text body
+                    html: ` 
+                          <h3>This is an automatically generated email, please do not reply </h3>
+                          <li>Your salary pass your account check </li>
+                          <li>status: Successuly  </li>
+                          <li>amount: ${amount}</li>
+                          <li>amount: ${month}</li>
+                          <li>amount: ${year}</li>
+                          
+                          <h3>Best regards,</h3>
+                          <p>Sipni Higher Education center</p>`,
+                };
+        
+                // HTML version of the message
+        
+                transporter.sendMail(HelperOptions, (error, info) => {
+                    // send mail with defined transport object
+                    if (error) {
+                        return console.log(error);
+                    }
+        
+                    console.log("The message was sent!");
+        
+                    console.log(info);
+        
+                    res.json(info); // send the json response
+                });
+            } catch (e) {
+                console.log(e);
+            }
         }
     }));
     //hhh
