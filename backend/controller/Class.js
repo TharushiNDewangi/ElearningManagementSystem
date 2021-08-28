@@ -47,3 +47,27 @@ exports.deleteById = (req, res) => {
         res.status(400).json({ error: 'Params required' });
     }
 };
+exports.updateScheduleById = (req, res) => {
+    const { Studentbatch, teachername, hall, day, starttime, endtime } = req.body;
+
+    ClassSchedule.findByIdAndUpdate(
+        req.params._id,
+        {
+            $set: {
+                Studentbatch: Studentbatch,
+                teachername: teachername,
+                hall: hall,
+                day: day,
+                starttime: starttime,
+                endtime: endtime,
+            },
+        },
+        { new: true }
+    )
+        .then((response) => {
+            res.status(200).json({ message: 'Updated' });
+        })
+        .catch((err) => {
+            res.status(404).json({ message: err.message });
+        });
+};
