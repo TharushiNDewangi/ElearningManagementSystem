@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../Layout';
 import { Container, Row, Col, Table } from 'react-bootstrap';
 import Input from '../UI/Input';
-import Modal from '../UI/Modal';
+import Modal from '../UI/Modal/index';
 import axios from 'axios';
 import DownloadButton from '../Utill/DownloadButton';
 import { Link } from 'react-router-dom';
@@ -207,24 +207,27 @@ const AllSchedule = (props) => {
                 handleClose={handleCloseUpdateDetailsModal}
                 modalTitle={'Update Schedule'}
                 size="lg"
+                onHide={() => setupdateDetails(false)}
+                aria-labelledby="contained-modal-title-vcenter"
             >
-                <Row>
-                    <Input label="Batch ID" value={batch} onChange={(e) => setBatch(e.target.value)} />
-                    <Input label="Teacher" value={teacher} onChange={(e) => setTeacher(e.target.value)} />
-                    <Input label="Hall" value={hall} onChange={(e) => setHall(e.target.value)} />
-                    <Input label="Day" value={day} onChange={(e) => setDay(e.target.value)} />
-                    <Input label="From" value={start} onChange={(e) => setStart(e.target.value)} />
-                    <Input label="To" value={end} onChange={(e) => setEnd(e.target.value)} />
-                    <Col md="6">
-                        <button
-                            className="userListEdit"
-                            onClick={(e) => submitStudentForm(updateDetailModal._id)}
-                        >
-                            Edit
-                        </button>
-                    </Col>
-                    <Col md="6"></Col>
-                </Row>
+                <Container>
+                    <Row>
+                        <Input label="Batch ID" value={batch} onChange={(e) => setBatch(e.target.value)} />
+                        <Input label="Teacher" value={teacher} onChange={(e) => setTeacher(e.target.value)} />
+                        <Input label="Hall" value={hall} onChange={(e) => setHall(e.target.value)} />
+                        <Input label="Day" value={day} onChange={(e) => setDay(e.target.value)} />
+                        <Input label="From" value={start} onChange={(e) => setStart(e.target.value)} />
+                        <Input label="To" value={end} onChange={(e) => setEnd(e.target.value)} />
+                        <Col md="8">
+                            <button
+                                className="userListEdit"
+                                onClick={(e) => submitStudentForm(updateDetailModal._id)}
+                            >
+                                Edit Schedule
+                            </button>
+                        </Col>
+                    </Row>
+                </Container>
             </Modal>
         );
     };
