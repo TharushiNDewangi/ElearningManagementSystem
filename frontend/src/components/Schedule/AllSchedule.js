@@ -17,6 +17,13 @@ const AllSchedule = (props) => {
     const [deleteDetailModal, setDeleteDetails] = useState(null);
     const [searchDetailModal, setSearchDetails] = useState(null);
 
+    const [hall, setHall] = useState('');
+    const [teacher, setTeacher] = useState('');
+    const [batch, setBatch] = useState('');
+    const [day, setDay] = useState('');
+    const [start, setStart] = useState('');
+    const [end, setEnd] = useState('');
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
@@ -30,25 +37,25 @@ const AllSchedule = (props) => {
             .get('http://localhost:8065/api/classschedule/viewall')
             .then((res) => {
                 setAllSchedules(res.data.data);
-                console.log(allSchedules);
             })
             .catch((err) => {
                 alert(err.message);
             });
-    }, [deleteDetailModal]);
+    }, [deleteDetailModal, updateDetailModal]);
 
     const submitStudentForm = (id) => {
         let data = {
-            name: name,
-            email: email,
-
-            Studentclass: Studentclass,
-            subject: subject,
+            hall: hall,
+            teachername: teacher,
+            Studentbatch: batch,
+            day: day,
+            starttime: start,
+            endtime: end,
         };
 
-        console.log(id);
-        axios.put(`http://localhost:8065/api/studentInstitute/edit/${id}`, data).then((res) => {
+        axios.put(`http://localhost:8065/api/classschedule/updateScheduleById/${id}`, data).then((res) => {
             alert('approved');
+            setupdateDetails(null);
         });
     };
     const Searchresult = (id) => {
@@ -79,8 +86,14 @@ const AllSchedule = (props) => {
     const showStudentDetailModal = (student) => {
         setStudentDetails(student);
     };
-    const UpdateDetailModal = (student) => {
-        setupdateDetails(student);
+    const UpdateDetailModal = (schedule) => {
+        setupdateDetails(schedule);
+        setHall(schedule.hall);
+        setTeacher(schedule.teachername);
+        setBatch(schedule.Studentbatch);
+        setDay(schedule.day);
+        setStart(schedule.starttime);
+        setEnd(schedule.endtime);
     };
     const DeleteDetailModal = (schedule) => {
         setDeleteDetails(schedule);
@@ -192,36 +205,17 @@ const AllSchedule = (props) => {
             <Modal
                 show={updateDetailModal}
                 handleClose={handleCloseUpdateDetailsModal}
-                modalTitle={'Workshop Details'}
+                modalTitle={'Update Schedule'}
                 size="lg"
             >
                 <Row>
-                    <Input
-                        label="Name"
-                        value={name}
-                        placeholder={updateDetailModal.name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <Input
-                        label="Email"
-                        value={email}
-                        placeholder={updateDetailModal.email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Input
-                        label="student class"
-                        value={Studentclass}
-                        placeholder={updateDetailModal.Studentclass}
-                        onChange={(e) => setStudentclass(e.target.value)}
-                    />
-                    <Input
-                        label="Subject"
-                        value={subject}
-                        placeholder={updateDetailModal.subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                    />
+                    <Input label="Batch ID" value={batch} onChange={(e) => setBatch(e.target.value)} />
+                    <Input label="Teacher" value={teacher} onChange={(e) => setTeacher(e.target.value)} />
+                    <Input label="Hall" value={hall} onChange={(e) => setHall(e.target.value)} />
+                    <Input label="Day" value={day} onChange={(e) => setDay(e.target.value)} />
+                    <Input label="From" value={start} onChange={(e) => setStart(e.target.value)} />
+                    <Input label="To" value={end} onChange={(e) => setEnd(e.target.value)} />
                     <Col md="6">
-                        <button className="userListDel">Delete</button>
                         <button
                             className="userListEdit"
                             onClick={(e) => submitStudentForm(updateDetailModal._id)}
@@ -352,7 +346,7 @@ const AllSchedule = (props) => {
 
                                             <button
                                                 className="userListEdit"
-                                                onClick={() => UpdateDetailModal(studentsininstitute)}
+                                                onClick={() => UpdateDetailModal(schedule)}
                                             >
                                                 Edit
                                             </button>
