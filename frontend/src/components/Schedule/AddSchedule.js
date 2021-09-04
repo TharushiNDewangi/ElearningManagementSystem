@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { Form, Row, Col } from 'react-bootstrap';
 // import Select from 'react-select';
@@ -13,17 +13,18 @@ const AddSchedule = (props) => {
     const [start, setStart] = useState('');
     const [end, setEnd] = useState('');
 
-    // const [Toptions, setTOptions] = useState([]);
+    const [allTeachers, setAllTeachers] = useState([{ value: 'None', label: 'None' }]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8065/api/classschedule/teachers').then((res) => {
-    //         setTOptions(
-    //             res.data.Teachers.map((teacher) => {
-    //                 return { value: teacher._id, label: teacher.name };
-    //             })
-    //         );
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios.get('http://localhost:8065/api/classschedule/teachers').then((res) => {
+            setAllTeachers([
+                ...allTeachers,
+                ...res.data.Teachers.map((teacher) => {
+                    return { value: teacher._id, label: teacher.name };
+                }),
+            ]);
+        });
+    }, [allTeachers]);
 
     function sendData(e) {
         e.preventDefault();
@@ -89,13 +90,13 @@ const AddSchedule = (props) => {
                                 setTeacher(e.target.value);
                             }}
                         >
-                            <option value="none">None</option>
+                            {/* <option value="none">None</option>
                             <option value="D. Perera">D. Perera</option>
                             <option value="P. Kamal">P. Kamal</option>
-                            <option value="K. Fernando">K. Fernando</option>
-                            {/* {Toptions.map((teacher) => {
-                                    return <option value={teacher.value}> {teacher.label} </option>;
-                                })} */}
+                            <option value="K. Fernando">K. Fernando</option> */}
+                            {allTeachers.map((teacher) => {
+                                return <option value={teacher.value}> {teacher.label} </option>;
+                            })}
                         </Form.Control>
                     </div>
                     <div className="form-group">
