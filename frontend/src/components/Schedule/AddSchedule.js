@@ -90,10 +90,6 @@ const AddSchedule = (props) => {
                                 setTeacher(e.target.value);
                             }}
                         >
-                            {/* <option value="none">None</option>
-                            <option value="D. Perera">D. Perera</option>
-                            <option value="P. Kamal">P. Kamal</option>
-                            <option value="K. Fernando">K. Fernando</option> */}
                             {allTeachers.map((teacher) => {
                                 return <option value={teacher.value}> {teacher.label} </option>;
                             })}
@@ -110,11 +106,10 @@ const AddSchedule = (props) => {
                             }}
                         >
                             <option value="none">None</option>
-                            <option value="2021-SE">2021-SE</option>
-                            <option value="2021-CS">2021-CS</option>
-                            <option value="2020-SE">2020-SE</option>
-                            <option value="2020-CS">2020-CS</option>
-                            <option value="2021-EN">2021-EN</option>
+                            <option value="G-10">G-10</option>
+                            <option value="G-11">G-11</option>
+                            <option value="G-12">G-12</option>
+                            <option value="G-13">G-13</option>
                         </Form.Control>
                     </div>
                     <div className="form-group">
