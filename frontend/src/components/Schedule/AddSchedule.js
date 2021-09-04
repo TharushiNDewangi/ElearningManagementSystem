@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { Form, Row, Col } from 'react-bootstrap';
 // import Select from 'react-select';
+import TimePicker from 'react-time-picker';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 import './style.css';
 const AddSchedule = (props) => {
     const [hall, setHall] = useState('');
     const [teacher, setTeacher] = useState('');
     const [batch, setBatch] = useState('');
     const [day, setDay] = useState('');
-    const [start, setStart] = useState('');
-    const [end, setEnd] = useState('');
+    const [start, setStart] = useState('00:00');
+    const [end, setEnd] = useState('00:00');
 
     const [allTeachers, setAllTeachers] = useState([{ value: 'None', label: 'None' }]);
 
@@ -24,8 +26,17 @@ const AddSchedule = (props) => {
                 }),
             ]);
         });
-    }, [allTeachers]);
+    }, []);
 
+    function tConv24(time24) {
+        var ts = time24;
+        var H = +ts.substr(0, 2);
+        var h = H % 12 || 12;
+        h = h < 10 ? '0' + h : h; // leading 0 at the left for 1 digit hours
+        var ampm = H < 12 ? ' AM' : ' PM';
+        ts = h + ts.substr(2, 3) + ampm;
+        return ts;
+    }
     function sendData(e) {
         e.preventDefault();
 
@@ -42,8 +53,8 @@ const AddSchedule = (props) => {
             teachername: teacher,
             Studentbatch: batch,
             day: day,
-            starttime: start,
-            endtime: end,
+            starttime: tConv24(start),
+            endtime: tConv24(end),
         };
         console.log(data);
         axios
@@ -91,7 +102,7 @@ const AddSchedule = (props) => {
                             }}
                         >
                             {allTeachers.map((teacher) => {
-                                return <option value={teacher.value}> {teacher.label} </option>;
+                                return <option value={teacher.label}> {teacher.label} </option>;
                             })}
                         </Form.Control>
                     </div>
@@ -136,25 +147,24 @@ const AddSchedule = (props) => {
                         <Row className="mb-3">
                             <Form.Group as={Col}>
                                 <label for="start">Start Time</label>
-                                <input
-                                    type="subject"
-                                    className="form-control"
-                                    id="start"
+                                <br />
+                                <TimePicker
+                                    className="clockClassName"
+                                    amPmAriaLabel="Select AM/PM"
                                     value={start}
-                                    onChange={(e) => {
-                                        setStart(e.target.value);
+                                    onChange={(value) => {
+                                        setStart(value);
                                     }}
                                 />
                             </Form.Group>
                             <Form.Group as={Col}>
                                 <label for="end">End Time</label>
-                                <input
-                                    type="subject"
-                                    className="form-control"
-                                    id="end"
+                                <br />
+                                <TimePicker
+                                    amPmAriaLabel="AM/PM"
                                     value={end}
-                                    onChange={(e) => {
-                                        setEnd(e.target.value);
+                                    onChange={(value) => {
+                                        setEnd(value);
                                     }}
                                 />
                             </Form.Group>
