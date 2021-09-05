@@ -185,7 +185,16 @@ class Addcourse extends Component {
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
 
-
+                    <div ref={ref}>
+                        <h1>{this.state.feesId}</h1>
+                        <p>{this.state.selectedsub}</p>
+                        <p>{this.state.amount}</p>
+                        <p>{this.state.email}</p>
+                        <p>{this.state.month}</p>
+                    </div>
+                    <Pdf targetRef={ref} filename="recept.pdf">
+                        {({ toPdf }) => <button onClick={toPdf}>Capture as PDF</button>}
+                    </Pdf>
                 </div>
 
 
