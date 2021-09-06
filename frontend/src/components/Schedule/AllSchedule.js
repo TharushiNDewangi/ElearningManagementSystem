@@ -15,7 +15,6 @@ const AllSchedule = (props) => {
     const [searchresult, setSearchresult] = useState(null);
     const [updateDetailModal, setupdateDetails] = useState(null);
     const [deleteDetailModal, setDeleteDetails] = useState(null);
-    const [searchDetailModal, setSearchDetails] = useState(null);
 
     const [hall, setHall] = useState('');
     const [teacher, setTeacher] = useState('');
@@ -30,6 +29,7 @@ const AllSchedule = (props) => {
     const [Studentclass, setStudentclass] = useState('');
     const [subject, setSubject] = useState('');
     const [searchByText, setSearchByText] = useState('');
+
     //////////////////////////////////
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const AllSchedule = (props) => {
             .catch((err) => {
                 alert(err.message);
             });
-    }, [deleteDetailModal, updateDetailModal]);
+    }, [searchByText, deleteDetailModal, updateDetailModal]);
 
     const submitStudentForm = (id) => {
         let data = {
@@ -60,18 +60,22 @@ const AllSchedule = (props) => {
     };
     const Searchresult = (inputText) => {
         if (inputText.length === 0) return;
+
+        const scheduleForFind = JSON.parse(JSON.stringify(allSchedules));
+
         setAllSchedules(
-            allSchedules.filter(
+            scheduleForFind.filter(
                 (schedule) =>
-                    schedule.ClassId.toLowerCase() === inputText.trim().toLowerCase() ||
-                    schedule.hall.toLowerCase() === inputText.trim().toLowerCase() ||
-                    schedule.teachername.toLowerCase() === inputText.trim().toLowerCase() ||
-                    schedule.Studentbatch.toLowerCase() === inputText.trim().toLowerCase() ||
-                    schedule.day.toLowerCase() === inputText.trim().toLowerCase() ||
-                    schedule.starttime.toLowerCase() === inputText.trim().toLowerCase() ||
-                    schedule.endtime.toLowerCase() === inputText.trim().toLowerCase()
+                    schedule.ClassId.toLowerCase().includes(inputText.trim().toLowerCase()) ||
+                    schedule.hall.toLowerCase().includes(inputText.trim().toLowerCase()) ||
+                    schedule.teachername.toLowerCase().includes(inputText.trim().toLowerCase()) ||
+                    schedule.Studentbatch.toLowerCase().includes(inputText.trim().toLowerCase()) ||
+                    schedule.day.toLowerCase().includes(inputText.trim().toLowerCase()) ||
+                    schedule.starttime.toLowerCase().includes(inputText.trim().toLowerCase()) ||
+                    schedule.endtime.toLowerCase().includes(inputText.trim().toLowerCase())
             )
         );
+        console.log(scheduleForFind);
     };
 
     const handleCloseStudentDetailsModal = () => {
@@ -103,9 +107,7 @@ const AllSchedule = (props) => {
     const DeleteDetailModal = (schedule) => {
         setDeleteDetails(schedule);
     };
-    const SearchDetailModal = (student) => {
-        setSearchDetails(student);
-    };
+
     const renderStudentDetailsModal = () => {
         if (!studentDetailModal) {
             return null;
@@ -299,6 +301,7 @@ const AllSchedule = (props) => {
                             <dv>
                                 <input
                                     type="text"
+                                    autocomplete="off"
                                     id="header-search"
                                     placeholder="Search Schedules"
                                     name="s"
