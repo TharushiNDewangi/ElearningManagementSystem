@@ -29,7 +29,7 @@ const AllSchedule = (props) => {
 
     const [Studentclass, setStudentclass] = useState('');
     const [subject, setSubject] = useState('');
-    const [searchid, setSearchid] = useState('');
+    const [searchByText, setSearchByText] = useState('');
     //////////////////////////////////
 
     useEffect(() => {
@@ -58,15 +58,20 @@ const AllSchedule = (props) => {
             setupdateDetails(null);
         });
     };
-    const Searchresult = (id) => {
-        let data = {
-            studentId: id,
-        };
-
-        axios.post(`http://localhost:8065/api/studentInstitute/sech`, data).then((res) => {
-            console.log(res.data.data);
-            setSearchresult(res.data.data);
-        });
+    const Searchresult = (inputText) => {
+        if (inputText.length === 0) return;
+        setAllSchedules(
+            allSchedules.filter(
+                (schedule) =>
+                    schedule.ClassId.toLowerCase() === inputText.trim().toLowerCase() ||
+                    schedule.hall.toLowerCase() === inputText.trim().toLowerCase() ||
+                    schedule.teachername.toLowerCase() === inputText.trim().toLowerCase() ||
+                    schedule.Studentbatch.toLowerCase() === inputText.trim().toLowerCase() ||
+                    schedule.day.toLowerCase() === inputText.trim().toLowerCase() ||
+                    schedule.starttime.toLowerCase() === inputText.trim().toLowerCase() ||
+                    schedule.endtime.toLowerCase() === inputText.trim().toLowerCase()
+            )
+        );
     };
 
     const handleCloseStudentDetailsModal = () => {
@@ -295,14 +300,14 @@ const AllSchedule = (props) => {
                                 <input
                                     type="text"
                                     id="header-search"
-                                    placeholder="Search Class"
+                                    placeholder="Search Schedules"
                                     name="s"
-                                    onChange={(e) => setSearchid(e.target.value)}
+                                    onChange={(e) => setSearchByText(e.target.value)}
                                 />
                                 <button
                                     className="userListSearch"
                                     type="submit"
-                                    onClick={() => Searchresult(searchid)}
+                                    onClick={() => Searchresult(searchByText)}
                                 >
                                     Search
                                 </button>
