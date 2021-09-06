@@ -108,45 +108,6 @@ const AllSchedule = (props) => {
         setDeleteDetails(schedule);
     };
 
-    const renderStudentDetailsModal = () => {
-        if (!studentDetailModal) {
-            return null;
-        }
-
-        return (
-            <Modal
-                show={studentDetailModal}
-                handleClose={handleCloseStudentDetailsModal}
-                modalTitle={'Workshop Details'}
-                size="lg"
-            >
-                <Row>
-                    <Col md="6">
-                        <label className="key">Name</label>
-                        <p className="key">{studentDetailModal.name}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{studentDetailModal.email}</p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md="6">
-                        <label className="key">Date</label>
-                        <p className="key">{studentDetailModal.studentId}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{studentDetailModal.Studentclass}</p>
-                    </Col>
-                    <Col md="6">
-                        <label className="key">Email</label>
-                        <p className="key">{studentDetailModal.subject}</p>
-                    </Col>
-                </Row>
-            </Modal>
-        );
-    };
     const renderDeleteDetailsModal = () => {
         if (!deleteDetailModal) {
             return null;
@@ -393,8 +354,6 @@ const AllSchedule = (props) => {
                     </Col>
                 </Row>
             </Container>
-
-            {renderStudentDetailsModal()}
             {renderUpdateDetailsModal()}
             {renderDeleteDetailsModal()}
             {renderSearchDetailsModal}
